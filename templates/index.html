@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create and Delete Resources</title>
+
+    <style>
+        /* Style the button */
+        .hello {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            
+        }
+        .null{
+            padding: 10% 10%;
+            border: solid 2px;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #4d4d4d; /* Initial background color */
+            transition: background-color 0.5s ease; /* Transition property */
+        }
+        .color1 {
+            background-color: #b1bfff; /* Color 1 */
+        }
+
+        .color2 {
+            background-color: #ffa9a9; /* Color 2 */
+        }
+
+        .color3 {
+            background-color: #ffe59d; /* Color 3 */
+        }
+
+       
+        
+    </style>
+  </head>
+  <body>
+    <div class="null color1 color1 color3">
+        <form action="/create_resources" method="post">
+            <button class="hello" id="create-resources-button" type="submit">Create AWS Resources</button>
+        </form>    
+    </div>
+
+    <script>
+      document.getElementById("createResourcesBtn").addEventListener("click", function() {
+            // Send a POST request to Flask API endpoint to create resources
+            fetch('/create_resources', {
+                method: 'POST',
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to create resources');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data); // Show success message
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to create resources');
+            });
+        });
+
+
+      //changing the color of the button
+      setInterval(function() {
+            var container = document.querySelector('.null');
+            if (container.classList.contains('color1')) {
+                container.classList.remove('color1');
+                container.classList.add('color2');
+            } else if (container.classList.contains('color2')) {
+                container.classList.remove('color2');
+                container.classList.add('color3');
+            } else {
+                container.classList.remove('color3');
+                container.classList.add('color1');
+            }
+        }, 2000);
+    </script>
+  </body>
+</html>
